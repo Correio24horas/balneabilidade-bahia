@@ -1,0 +1,9 @@
+scrapy
+git+https://github.com/turicas/rows.git@feature/plugin-pdf
+pdfminer.six
+rows
+xlrd
+xlwt
+click
+requests
+requests-cache
