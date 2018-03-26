@@ -18,7 +18,7 @@ class ListaBoletinsSpider(Spider):
                               .replace('CAMPANHA EMERG', 'CAMPANHA_EMERG')
                               .split())
             partes_data = [int(parte) for parte in partes[-1].split('/')]
-            data = f'{partes_data[2]}-{partes_data[1]:02d}-{partes_data[2]:02d}'
+            data = f'{partes_data[2]}-{partes_data[1]:02d}-{partes_data[0]:02d}'
 
             yield {
                 'costa': partes[2],
