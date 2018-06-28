@@ -1,3 +1,4 @@
+cached-property
 click
 git+https://github.com/turicas/rows.git@feature/plugin-pdf#egg=rows
 pdfminer.six
