@@ -15,7 +15,7 @@ BOLETINS="data/output/boletins.csv"
 BALNEABILIDADE="data/output/balneabilidade.csv"
 DBNAME="data/output/balneabilidade-bahia.sqlite"
 
-rm -rf data && mkdir data
+rm -rf data/output && mkdir -p data/output
 time run_spider lista_boletins.py "$BOLETINS" && xz -z "$BOLETINS"
 time run_spider extrai_boletins.py "$BALNEABILIDADE" && xz "$BALNEABILIDADE"
 time rows csv2sqlite "$BOLETINS.xz" "$BALNEABILIDADE.xz" "$DBNAME"
