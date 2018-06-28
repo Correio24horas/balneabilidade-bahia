@@ -1,9 +1,8 @@
-scrapy
-git+https://github.com/turicas/rows.git@feature/plugin-pdf
-pdfminer.six
-rows
-xlrd
-xlwt
 click
+git+https://github.com/turicas/rows.git@feature/plugin-pdf#egg=rows
+pdfminer.six
 requests
 requests-cache
+rows
+scrapy
+tqdm

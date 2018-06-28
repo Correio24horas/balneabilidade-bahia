@@ -1,6 +1,8 @@
 #!/bin/bash
 
-function run_spider() {
+set -e
+
+run_spider() {
 	scrapy runspider "$1" \
 		-s HTTPCACHE_ENABLED=True \
 		-s HTTPCACHE_POLICY=scrapy.extensions.httpcache.RFC2616Policy \
@@ -9,8 +11,11 @@ function run_spider() {
 		-o "$2"
 }
 
-rm -rf output && mkdir output
-time run_spider lista_boletins.py output/boletins.csv
-time run_spider extrai_boletins.py output/balneabilidade.csv
-rows convert output/boletins.{csv,xls}
-rows convert output/balneabilidade.{csv,xls}
+BOLETINS="data/output/boletins.csv"
+BALNEABILIDADE="data/output/balneabilidade.csv"
+DBNAME="data/output/balneabilidade-bahia.sqlite"
+
+rm -rf data && mkdir data
+time run_spider lista_boletins.py "$BOLETINS" && xz -z "$BOLETINS"
+time run_spider extrai_boletins.py "$BALNEABILIDADE" && xz "$BALNEABILIDADE"
+time rows csv2sqlite "$BOLETINS.xz" "$BALNEABILIDADE.xz" "$DBNAME"

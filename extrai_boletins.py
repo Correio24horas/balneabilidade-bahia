@@ -1,7 +1,8 @@
 import csv
 import io
-import re
 import logging
+import lzma
+import re
 from pathlib import Path
 
 import rows
@@ -39,17 +40,19 @@ class ExtraiBoletins(Spider):
         if not download_path.exists():
             download_path.mkdir()
 
-        with open('output/boletins.csv', encoding='utf8') as fobj:
+        fobj = io.TextIOWrapper(
+            lzma.open('data/output/boletins.csv.xz'),
+            encoding='utf8'
+        )
+        for row in csv.DictReader(fobj):
+            filename = download_path / f'{row["id_campanha"]}.pdf'
+            row['filename'] = filename
+            if filename.exists():
+                url = 'file://' + str(filename.absolute())
+            else:
+                url = row['url']
 
-            for row in csv.DictReader(fobj):
-                filename = download_path / f'{row["id_campanha"]}.pdf'
-                row['filename'] = filename
-                if filename.exists():
-                    url = 'file://' + str(filename.absolute())
-                else:
-                    url = row['url']
-
-                yield Request(url=url, meta=row)
+            yield Request(url=url, meta=row)
 
     def parse(self, response):
         meta = response.request.meta.copy()
