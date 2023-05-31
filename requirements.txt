@@ -1,6 +1,6 @@
 cached-property
 click
-git+https://github.com/turicas/rows.git@feature/plugin-pdf#egg=rows
+git+https://github.com/turicas/rows.git@develop#egg=rows
 pdfminer.six
 requests
 requests-cache
